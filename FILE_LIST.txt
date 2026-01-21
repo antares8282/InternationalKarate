@@ -1,0 +1,166 @@
+INTERNATIONAL KARATE - Unity 2D Fighting Game
+==============================================
+
+PROJECT FILES CREATED
+=====================
+
+Documentation (3 files)
+-----------------------
+📄 SETUP_GUIDE.md          - Complete step-by-step Unity setup instructions
+📄 PROJECT_SUMMARY.md      - Full project overview and architecture
+📄 QUICK_REFERENCE.md      - Quick lookup for developers
+📄 FILE_LIST.txt           - This file
+
+Scripts - Combat System (3 files)
+----------------------------------
+📜 Assets/Scripts/Combat/MoveType.cs      - Enums: MoveType, HitZone, PointValue
+📜 Assets/Scripts/Combat/MoveData.cs      - ScriptableObject for move configuration
+📜 Assets/Scripts/Combat/MoveExecutor.cs  - Move execution, timing, hit detection
+
+Scripts - Characters (1 file)
+------------------------------
+📜 Assets/Scripts/Characters/FighterController.cs - Main fighter controller
+
+Scripts - Input (1 file)
+------------------------
+📜 Assets/Scripts/Input/PlayerInput.cs - 2-player keyboard input handling
+
+Scripts - Managers (4 files)
+-----------------------------
+📜 Assets/Scripts/Managers/MatchManager.cs    - Match flow, scoring, timer
+📜 Assets/Scripts/Managers/GameManager.cs     - Game state, audio, scenes
+📜 Assets/Scripts/Managers/CameraController.cs - Dynamic 2D camera
+📜 Assets/Scripts/Managers/DebugManager.cs    - Debug utilities
+
+Scripts - UI (1 file)
+---------------------
+📜 Assets/Scripts/UI/MatchUI.cs - Score, timer, round info display
+
+Total Scripts: 10 C# files
+
+Folder Structure Created
+-------------------------
+Assets/
+├── Scripts/
+│   ├── Characters/       ✓ Created
+│   ├── Combat/          ✓ Created
+│   ├── Input/           ✓ Created
+│   ├── Managers/        ✓ Created
+│   └── UI/              ✓ Created
+├── Sprites/
+│   ├── Characters/      ✓ Ready for your sprites
+│   └── Backgrounds/     ✓ Ready for your backgrounds
+├── Animations/          ✓ Ready for animation controllers
+├── Prefabs/            ✓ Ready for prefabs
+└── Audio/
+    ├── Music/          ✓ Ready for background music
+    └── SFX/            ✓ Ready for sound effects
+
+WHAT YOU NEED TO DO NEXT
+=========================
+
+1. Import Your Assets
+   □ Character sprite sheets → Assets/Sprites/Characters/
+   □ Background images → Assets/Sprites/Backgrounds/
+   □ Sound effects → Assets/Audio/SFX/
+   □ Music tracks → Assets/Audio/Music/
+
+2. Create Move Data (in Unity)
+   □ Right-click → Create → International Karate → Move Data
+   □ Create one for each move type (High Punch, Mid Kick, etc.)
+   □ Configure hitboxes, timings, animations
+
+3. Set Up Animations
+   □ Create Animator Controller
+   □ Slice sprite sheets
+   □ Create animation clips
+   □ Add triggers matching MoveData
+
+4. Build Fighter Prefabs
+   □ Create GameObject with all components
+   □ Assign MoveData assets to MoveExecutor
+   □ Configure player numbers
+   □ Save as prefab
+
+5. Configure Game Scene
+   □ Add Camera with CameraController
+   □ Add Background sprite
+   □ Add Ground collider
+   □ Place both Fighter prefabs
+   □ Add MatchManager
+   □ Create UI Canvas with score/timer elements
+   □ Assign all references
+
+6. Test and Tune
+   □ Test both players' controls
+   □ Adjust hitbox sizes
+   □ Balance move timings
+   □ Fine-tune camera boundaries
+
+CONTROLS
+========
+
+Player 1                    Player 2
+--------                    --------
+Movement:   A/D            Left/Right Arrow
+High Punch: W              Up Arrow
+Mid Punch:  S              Down Arrow
+Low Punch:  X              Period (.)
+High Kick:  E              Right Ctrl
+Mid Kick:   Q              Right Shift
+Low Kick:   Z              Comma (,)
+Block:      Left Shift     Slash (/)
+Turn:       C              M
+
+Debug Keys (when enabled)
+-------------------------
+R - Restart match
+P - Pause/Resume
+1 - Force Player 1 win
+2 - Force Player 2 win
+
+KEY FEATURES IMPLEMENTED
+========================
+
+✓ Point-based scoring (half-point & full-point)
+✓ 2 points to win system
+✓ Pause-and-reset after hits (authentic to original game)
+✓ 60-second rounds with timer
+✓ No auto-turn (must execute turn-around)
+✓ Hit detection with zone-specific blocking
+✓ Dynamic camera following both fighters
+✓ Complete 2-player local multiplayer
+✓ Event-driven UI updates
+✓ ScriptableObject-based move system
+✓ Debug mode with testing utilities
+✓ Modular, extensible architecture
+
+GAME FLOW
+=========
+
+1. Match starts
+2. Round begins (60 seconds)
+3. Players move and attack
+4. Hit detected → Points awarded → Pause
+5. Fighters reset to start positions
+6. Combat continues
+7. First to 2 points wins OR timer expires
+8. Winner declared
+9. Option to restart
+
+REFERENCES
+==========
+
+• SETUP_GUIDE.md     - Complete Unity setup walkthrough
+• PROJECT_SUMMARY.md - Full technical documentation
+• QUICK_REFERENCE.md - Developer quick reference
+
+Based on: International Karate (1985) by System 3
+Original Design: Archer Maclean
+Platform: Commodore 64, Amiga
+
+YouTube Reference: https://www.youtube.com/watch?v=6BOXR008V2I
+
+==============================================
+Ready to implement! Follow SETUP_GUIDE.md
+==============================================
