@@ -60,6 +60,11 @@ ExportedObj/
 
 # Unity3D generated file on crash reports
 sysinfo.txt
+mono_crash.mem.*.blob
+
+# Auto-backup system
+.git-hooks/*.log
+.claude/settings.local.json
 
 # Builds
 *.apk
