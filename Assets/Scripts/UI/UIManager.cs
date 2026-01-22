@@ -13,12 +13,12 @@ namespace InternationalKarate.UI
         public static UIManager Instance { get; private set; }
 
         [Header("Score Display")]
-        public TextMeshProUGUI player1ScoreText;
-        public TextMeshProUGUI player2ScoreText;
+        public SpriteNumberDisplay player1ScoreDisplay;
+        public SpriteNumberDisplay player2ScoreDisplay;
 
-        [Header("Health Bars")]
-        public Image player1HealthBar;
-        public Image player2HealthBar;
+        [Header("Health Display")]
+        public HealthCircles player1HealthCircles;
+        public HealthCircles player2HealthCircles;
 
         [Header("Labels and Info")]
         public TextMeshProUGUI player1Label;
@@ -63,28 +63,28 @@ namespace InternationalKarate.UI
         /// </summary>
         public void UpdateScore(int playerNumber, float score)
         {
-            if (playerNumber == 1 && player1ScoreText != null)
+            if (playerNumber == 1 && player1ScoreDisplay != null)
             {
-                player1ScoreText.text = score.ToString("F1");
+                player1ScoreDisplay.SetValue(score);
             }
-            else if (playerNumber == 2 && player2ScoreText != null)
+            else if (playerNumber == 2 && player2ScoreDisplay != null)
             {
-                player2ScoreText.text = score.ToString("F1");
+                player2ScoreDisplay.SetValue(score);
             }
         }
 
         /// <summary>
-        /// Update health bar fill amount
+        /// Update health circle display
         /// </summary>
         public void UpdateHealth(int playerNumber, float healthPercent)
         {
-            if (playerNumber == 1 && player1HealthBar != null)
+            if (playerNumber == 1 && player1HealthCircles != null)
             {
-                player1HealthBar.fillAmount = healthPercent;
+                player1HealthCircles.SetHealthPercent(healthPercent);
             }
-            else if (playerNumber == 2 && player2HealthBar != null)
+            else if (playerNumber == 2 && player2HealthCircles != null)
             {
-                player2HealthBar.fillAmount = healthPercent;
+                player2HealthCircles.SetHealthPercent(healthPercent);
             }
         }
 
@@ -109,7 +109,7 @@ namespace InternationalKarate.UI
         {
             if (beltText != null)
             {
-                beltText.text = $"{beltColor.ToUpper()}\nBELT";
+                beltText.text = $"{beltColor.ToUpper()} BELT";
             }
         }
 
