@@ -57,8 +57,8 @@ void OnHit(PointValue points)             // Called when hit
 ```csharp
 void StartMatch()                                    // Begin new match
 void OnFighterHit(int playerNumber, PointValue pts) // Register hit
-float GetPlayer1Score()                              // Get P1 score
-float GetPlayer2Score()                              // Get P2 score
+int GetPlayer1Score()                                // Get P1 score (max: 99999)
+int GetPlayer2Score()                                // Get P2 score (max: 99999)
 void RestartMatch()                                  // Restart
 ```
 
@@ -70,7 +70,7 @@ bool ExecuteMove(MoveType moveType) // Execute move with timing
 ## Unity Events (MatchManager)
 
 ```csharp
-OnScoreChanged(int playerNum, float score)  // Score updated
+OnScoreChanged(int playerNum, int score)    // Score updated (max: 99999)
 OnRoundWon(int playerNum)                   // Round ended
 OnMatchWon(int playerNum)                   // Match ended
 OnTimerUpdated(float timeRemaining)         // Timer tick

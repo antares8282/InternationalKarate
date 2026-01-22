@@ -117,6 +117,23 @@ namespace InternationalKarate.Gameplay
         }
 
         /// <summary>
+        /// Show "MATCH OVER" message
+        /// </summary>
+        public void ShowMatchOver()
+        {
+            ShowMessage("MATCH\nOVER");
+        }
+
+        /// <summary>
+        /// Show belt color announcement (WHITE, RED, BROWN, BLACK, etc.)
+        /// Used at the start of a match to announce opponent difficulty
+        /// </summary>
+        public void ShowBeltColor(string beltColor)
+        {
+            ShowMessage(beltColor.ToUpper());
+        }
+
+        /// <summary>
         /// Show a custom message in the speech bubble
         /// </summary>
         public void ShowMessage(string message, float duration = -1)
