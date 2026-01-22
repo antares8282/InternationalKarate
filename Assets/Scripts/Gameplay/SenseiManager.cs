@@ -4,16 +4,16 @@ using System.Collections;
 namespace InternationalKarate.Gameplay
 {
     /// <summary>
-    /// Manages the referee sprite and speech bubbles
+    /// Manages the sensei sprite and speech bubbles
     /// Displays messages like "BEGIN", "FULL POINT", "HALF POINT", score values, etc.
     /// </summary>
-    public class RefereeManager : MonoBehaviour
+    public class SenseiManager : MonoBehaviour
     {
-        public static RefereeManager Instance { get; private set; }
+        public static SenseiManager Instance { get; private set; }
 
-        [Header("Referee Sprite")]
-        [Tooltip("SpriteRenderer for the referee character")]
-        public SpriteRenderer refereeSprite;
+        [Header("Sensei Sprite")]
+        [Tooltip("SpriteRenderer for the sensei character")]
+        public SpriteRenderer senseiSprite;
 
         [Header("Speech Bubble")]
         [Tooltip("Parent GameObject containing the speech bubble")]
@@ -200,24 +200,24 @@ namespace InternationalKarate.Gameplay
         }
 
         /// <summary>
-        /// Show the referee sprite
+        /// Show the sensei sprite
         /// </summary>
-        public void ShowReferee()
+        public void ShowSensei()
         {
-            if (refereeSprite != null)
+            if (senseiSprite != null)
             {
-                refereeSprite.enabled = true;
+                senseiSprite.enabled = true;
             }
         }
 
         /// <summary>
-        /// Hide the referee sprite
+        /// Hide the sensei sprite
         /// </summary>
-        public void HideReferee()
+        public void HideSensei()
         {
-            if (refereeSprite != null)
+            if (senseiSprite != null)
             {
-                refereeSprite.enabled = false;
+                senseiSprite.enabled = false;
             }
         }
     }

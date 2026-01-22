@@ -50,7 +50,7 @@ namespace InternationalKarate.Editor
 
         private void Update()
         {
-            if (RefereeManager.Instance == null)
+            if (SenseiManager.Instance == null)
             {
                 return;
             }
@@ -59,85 +59,85 @@ namespace InternationalKarate.Editor
             if (Input.GetKeyDown(testBegin))
             {
                 Debug.Log("Testing: BEGIN");
-                RefereeManager.Instance.ShowBegin();
+                SenseiManager.Instance.ShowBegin();
             }
 
             // Test HALF POINT
             if (Input.GetKeyDown(testHalfPoint))
             {
                 Debug.Log("Testing: HALF POINT");
-                RefereeManager.Instance.ShowHalfPoint();
+                SenseiManager.Instance.ShowHalfPoint();
             }
 
             // Test FULL POINT
             if (Input.GetKeyDown(testFullPoint))
             {
                 Debug.Log("Testing: FULL POINT");
-                RefereeManager.Instance.ShowFullPoint();
+                SenseiManager.Instance.ShowFullPoint();
             }
 
             // Test MATCH OVER
             if (Input.GetKeyDown(testMatchOver))
             {
                 Debug.Log("Testing: MATCH OVER");
-                RefereeManager.Instance.ShowMatchOver();
+                SenseiManager.Instance.ShowMatchOver();
             }
 
             // Test WHITE belt
             if (Input.GetKeyDown(testWhiteBelt))
             {
                 Debug.Log("Testing: WHITE belt");
-                RefereeManager.Instance.ShowBeltColor("WHITE");
+                SenseiManager.Instance.ShowBeltColor("WHITE");
             }
 
             // Test RED belt
             if (Input.GetKeyDown(testRedBelt))
             {
                 Debug.Log("Testing: RED belt");
-                RefereeManager.Instance.ShowBeltColor("RED");
+                SenseiManager.Instance.ShowBeltColor("RED");
             }
 
             // Test BLACK belt
             if (Input.GetKeyDown(testBlackBelt))
             {
                 Debug.Log("Testing: BLACK belt");
-                RefereeManager.Instance.ShowBeltColor("BLACK");
+                SenseiManager.Instance.ShowBeltColor("BLACK");
             }
 
             // Test TIME
             if (Input.GetKeyDown(testTime))
             {
                 Debug.Log("Testing: TIME");
-                RefereeManager.Instance.ShowTime();
+                SenseiManager.Instance.ShowTime();
             }
 
             // Test YOU WIN
             if (Input.GetKeyDown(testYouWin))
             {
                 Debug.Log("Testing: YOU WIN");
-                RefereeManager.Instance.ShowYouWin();
+                SenseiManager.Instance.ShowYouWin();
             }
 
             // Test YOU LOSE
             if (Input.GetKeyDown(testYouLose))
             {
                 Debug.Log("Testing: YOU LOSE");
-                RefereeManager.Instance.ShowYouLose();
+                SenseiManager.Instance.ShowYouLose();
             }
 
             // Hide message
             if (Input.GetKeyDown(hideMessage))
             {
                 Debug.Log("Hiding speech bubble");
-                RefereeManager.Instance.HideMessage();
+                SenseiManager.Instance.HideMessage();
             }
         }
 
         private void OnGUI()
         {
-            if (RefereeManager.Instance == null)
+            if (SenseiManager.Instance == null)
             {
-                GUI.Label(new Rect(10, 10, 500, 30), "⚠ RefereeManager not found in scene!");
+                GUI.Label(new Rect(10, 10, 500, 30), "⚠ SenseiManager not found in scene!");
                 return;
             }
 

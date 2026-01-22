@@ -5,9 +5,9 @@ using System.Collections;
 namespace InternationalKarate.UI
 {
     /// <summary>
-    /// Manages the referee's speech bubble that appears during match events
+    /// Manages the sensei's speech bubble that appears during match events
     /// </summary>
-    public class RefereeSpeechBubble : MonoBehaviour
+    public class SenseiSpeechBubble : MonoBehaviour
     {
         [Header("References")]
         [Tooltip("The TextMeshPro component for the bubble text")]
@@ -68,7 +68,7 @@ namespace InternationalKarate.UI
         }
 
         /// <summary>
-        /// Common referee messages
+        /// Common sensei messages
         /// </summary>
         public void ShowHalfPoint()
         {
