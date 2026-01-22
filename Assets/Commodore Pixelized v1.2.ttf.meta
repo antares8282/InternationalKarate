@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 70589c770cdbe4258a00d409dd283c67
+guid: 7e8be929c3a774abf9563faf90dff8ee
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Commodore 64
+  - Commodore 64 Pixelized
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

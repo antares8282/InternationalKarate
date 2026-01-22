@@ -31,11 +31,14 @@ namespace InternationalKarate.Managers
         private float currentRoundTime;
 
         [Header("Score Tracking")]
-        private float player1Score = 0f; // Using float to handle half-points (0.5, 1.0, 1.5, 2.0)
-        private float player2Score = 0f;
+        private int player1Score = 0; // Using int: 500 = half point, 1000 = full point
+        private int player2Score = 0;
+        private const int HALF_POINT = 500;
+        private const int FULL_POINT = 1000;
+        private const int WINNING_SCORE = 2000; // 2 full points
 
         [Header("Events")]
-        public UnityEvent<int, float> OnScoreChanged; // playerNumber, newScore
+        public UnityEvent<int, int> OnScoreChanged; // playerNumber, newScore
         public UnityEvent<int> OnRoundWon; // playerNumber
         public UnityEvent<int> OnMatchWon; // playerNumber
         public UnityEvent<float> OnTimerUpdated; // timeRemaining
@@ -70,8 +73,8 @@ namespace InternationalKarate.Managers
         public void StartMatch()
         {
             isMatchActive = true;
-            player1Score = 0f;
-            player2Score = 0f;
+            player1Score = 0;
+            player2Score = 0;
 
             OnScoreChanged?.Invoke(1, player1Score);
             OnScoreChanged?.Invoke(2, player2Score);
@@ -121,7 +124,7 @@ namespace InternationalKarate.Managers
             if (!isRoundActive)
                 return;
 
-            float points = pointValue == PointValue.Half ? 0.5f : (pointValue == PointValue.Full ? 1f : 0f);
+            int points = pointValue == PointValue.Half ? HALF_POINT : (pointValue == PointValue.Full ? FULL_POINT : 0);
 
             if (attackingPlayerNumber == 1)
             {
@@ -137,11 +140,11 @@ namespace InternationalKarate.Managers
             }
 
             // Check for round winner
-            if (player1Score >= pointsToWin)
+            if (player1Score >= WINNING_SCORE)
             {
                 StartCoroutine(HandleHitAndReset(1));
             }
-            else if (player2Score >= pointsToWin)
+            else if (player2Score >= WINNING_SCORE)
             {
                 StartCoroutine(HandleHitAndReset(2));
             }
@@ -215,8 +218,8 @@ namespace InternationalKarate.Managers
             StartMatch();
         }
 
-        public float GetPlayer1Score() => player1Score;
-        public float GetPlayer2Score() => player2Score;
+        public int GetPlayer1Score() => player1Score;
+        public int GetPlayer2Score() => player2Score;
         public float GetRoundTimeRemaining() => currentRoundTime;
     }
 }

@@ -61,7 +61,7 @@ namespace InternationalKarate.UI
         /// <summary>
         /// Update player score display
         /// </summary>
-        public void UpdateScore(int playerNumber, float score)
+        public void UpdateScore(int playerNumber, int score)
         {
             if (playerNumber == 1 && player1ScoreDisplay != null)
             {

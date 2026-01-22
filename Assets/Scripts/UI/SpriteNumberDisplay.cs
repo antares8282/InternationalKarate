@@ -24,7 +24,7 @@ namespace InternationalKarate.UI
         public TextAlignment alignment = TextAlignment.Left;
 
         [Header("Current Value")]
-        [SerializeField] private float currentValue = 0f;
+        [SerializeField] private int currentValue = 0;
 
         private List<GameObject> digitObjects = new List<GameObject>();
 
@@ -44,7 +44,7 @@ namespace InternationalKarate.UI
         /// <summary>
         /// Set the displayed number value
         /// </summary>
-        public void SetValue(float value)
+        public void SetValue(int value)
         {
             currentValue = value;
             UpdateDisplay(value);
@@ -53,7 +53,7 @@ namespace InternationalKarate.UI
         /// <summary>
         /// Get the current displayed value
         /// </summary>
-        public float GetValue()
+        public int GetValue()
         {
             return currentValue;
         }
@@ -61,23 +61,13 @@ namespace InternationalKarate.UI
         /// <summary>
         /// Update the visual display of the number
         /// </summary>
-        private void UpdateDisplay(float value)
+        private void UpdateDisplay(int value)
         {
             // Clear existing digit objects
             ClearDigits();
 
-            // Format the number (remove decimal if it's .0)
-            string numberString;
-            if (value % 1 == 0)
-            {
-                // Whole number - no decimal
-                numberString = ((int)value).ToString();
-            }
-            else
-            {
-                // Has decimal - show one decimal place
-                numberString = value.ToString("F1");
-            }
+            // Convert integer to string
+            string numberString = value.ToString();
 
             // Create digit sprites
             float totalWidth = CalculateTotalWidth(numberString);
@@ -88,13 +78,7 @@ namespace InternationalKarate.UI
             {
                 char c = numberString[i];
 
-                if (c == '.')
-                {
-                    // Handle decimal point (you can add a decimal sprite if you have one)
-                    // For now, just add spacing
-                    currentX += digitSpacing * 0.5f;
-                }
-                else if (char.IsDigit(c))
+                if (char.IsDigit(c))
                 {
                     int digit = c - '0'; // Convert char to int
 
@@ -139,11 +123,7 @@ namespace InternationalKarate.UI
             {
                 char c = numberString[i];
 
-                if (c == '.')
-                {
-                    width += digitSpacing * 0.5f;
-                }
-                else if (char.IsDigit(c))
+                if (char.IsDigit(c))
                 {
                     int digit = c - '0';
                     if (digit >= 0 && digit < digitSprites.Length && digitSprites[digit] != null)
