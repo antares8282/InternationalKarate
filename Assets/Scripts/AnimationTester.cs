@@ -160,8 +160,10 @@ public class AnimationTester : MonoBehaviour
         bool needsVerticalMove = (animName == "MiniJump");
         float moveDistance = animName == "FlyingKick" ? flyingKickDistance : jumpDistance;
 
-        // Direction based on sprite flip (feet should match face direction)
-        float direction = (targetSpriteRenderer != null && targetSpriteRenderer.flipX) ? -1f : 1f;
+        // Direction based on transform scale (negative X = facing left) and sprite flip
+        float scaleSign = (targetTransform != null && targetTransform.localScale.x < 0) ? -1f : 1f;
+        float flipSign = (targetSpriteRenderer != null && targetSpriteRenderer.flipX) ? -1f : 1f;
+        float direction = scaleSign * flipSign;
 
         if (AudioManager.Instance != null)
             AudioManager.Instance.PlayAttackSound(animName);

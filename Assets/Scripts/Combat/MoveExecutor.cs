@@ -172,9 +172,12 @@ namespace InternationalKarate.Combat
 
         private MoveData GetMoveData(MoveType moveType)
         {
+            if (availableMoves == null || availableMoves.Length == 0)
+                return null;
+
             foreach (var move in availableMoves)
             {
-                if (move.moveType == moveType)
+                if (move != null && move.moveType == moveType)
                     return move;
             }
             return null;
