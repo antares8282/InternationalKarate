@@ -2,10 +2,11 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using InternationalKarate.Audio;
+using InternationalKarate.Gameplay;
 
 /// <summary>
-/// Test script for viewing all Player1 animations in play mode.
-/// Each animation plays ONCE completely then returns to Idle.
+/// Test script for viewing all Player1 animations and Sensei speech bubbles.
+/// Uses alphabet keys A-Z for all controls (no Tab/pages).
 /// </summary>
 public class AnimationTester : MonoBehaviour
 {
@@ -14,36 +15,40 @@ public class AnimationTester : MonoBehaviour
     public Transform targetTransform;
     public SpriteRenderer targetSpriteRenderer;
 
+    [Header("Sensei")]
+    public SenseiManager senseiManager;
+
     [Header("Settings")]
-    public float jumpDistance = 6f;
-    public float flyingKickDistance = 12f;
+    public float jumpDistance = 54f;
+    public float jumpHeight = 1.8f;
+    public float flyingKickDistance = 2f;
+    public float flyingKickHeight = 4f;
+    public float miniJumpHeight = 1.65f; // approx 75% of character height
 
     private string currentAnimation = "";
     private bool isPlaying = false;
     private float currentSpeed = 1f;
     private Coroutine playCoroutine;
-    private int currentPage = 0;
-    private const int TOTAL_PAGES = 2;
     private Vector3 playerStartPosition;
 
     private Dictionary<string, float> speedMultipliers = new Dictionary<string, float>()
     {
         {"Idle", 1f},
-        {"Walking", 0.05f},
-        {"Wait", 0.05f},
-        {"Greet", 0.05f},
-        {"jump", 1f},
+        {"Walking", 0.07f},
+        {"Wait", 0.06f},
+        {"Greet", 0.06f},
+        {"jump", 0.8f},
         {"MiniJump", 0.35f},
-        {"HighPunch", 1f},
-        {"GroinPunch", 1f},
-        {"HighKick", 1f},
+        {"HighPunch", 0.5f},
+        {"GroinPunch", 0.5f},
+        {"HighKick", 0.4f},
         {"LowKick", 1f},
-        {"CrouchKick", 1f},
-        {"RoundHouse", 0.5f},
+        {"CrouchKick", 0.425f},
+        {"RoundHouse", 0.375f},
         {"FlyingKick", 0.6f},
-        {"AnkleKick", 0.5f},
-        {"Hurt", 0.1f},
-        {"HurtGroin", 0.1f}
+        {"AnkleKick", 0.1f},
+        {"Hurt", 0.126f},
+        {"HurtGroin", 0.126f}
     };
 
     private void Start()
@@ -65,47 +70,68 @@ public class AnimationTester : MonoBehaviour
         }
         if (targetTransform != null)
             playerStartPosition = targetTransform.position;
+
+        if (senseiManager == null)
+            senseiManager = FindObjectOfType<SenseiManager>();
+
+        // Disable PlayerInput to prevent key conflicts during testing
+        var playerInput = FindObjectOfType<InternationalKarate.Characters.PlayerInput>();
+        if (playerInput != null)
+            playerInput.enabled = false;
     }
 
     private void Update()
     {
         if (targetAnimator == null) return;
 
-        // Page navigation
-        if (Input.GetKeyDown(KeyCode.Tab))
+        // === ANIMATIONS (A-P) ===
+        // A-F: Basic animations
+        if (Input.GetKeyDown(KeyCode.A)) PlayAnimationOnce("Idle");
+        if (Input.GetKeyDown(KeyCode.B)) PlayAnimationOnce("Walking");
+        if (Input.GetKeyDown(KeyCode.C)) PlayAnimationOnce("Wait");
+        if (Input.GetKeyDown(KeyCode.D)) PlayAnimationOnce("Greet");
+        if (Input.GetKeyDown(KeyCode.E)) PlayAnimationOnce("jump");
+        if (Input.GetKeyDown(KeyCode.F)) PlayAnimationOnce("MiniJump");
+
+        // G-L: Attack animations
+        if (Input.GetKeyDown(KeyCode.G)) PlayAnimationOnce("HighPunch");
+        if (Input.GetKeyDown(KeyCode.H)) PlayAnimationOnce("GroinPunch");
+        if (Input.GetKeyDown(KeyCode.I)) PlayAnimationOnce("HighKick");
+        if (Input.GetKeyDown(KeyCode.J)) PlayAnimationOnce("LowKick");
+        if (Input.GetKeyDown(KeyCode.K)) PlayAnimationOnce("CrouchKick");
+        if (Input.GetKeyDown(KeyCode.L)) PlayAnimationOnce("RoundHouse");
+
+        // M-P: More attacks + hurt
+        if (Input.GetKeyDown(KeyCode.M)) PlayAnimationOnce("FlyingKick");
+        if (Input.GetKeyDown(KeyCode.N)) PlayAnimationOnce("AnkleKick");
+        if (Input.GetKeyDown(KeyCode.O)) PlayAnimationOnce("Hurt");
+        if (Input.GetKeyDown(KeyCode.P)) PlayAnimationOnce("HurtGroin");
+
+        // === SENSEI SPEECH BUBBLES (Q-Z) ===
+        if (senseiManager != null)
         {
-            currentPage = (currentPage + 1) % TOTAL_PAGES;
+            if (Input.GetKeyDown(KeyCode.Q)) senseiManager.ShowBegin();
+            if (Input.GetKeyDown(KeyCode.R)) senseiManager.ShowFullPoint();
+            if (Input.GetKeyDown(KeyCode.S)) senseiManager.ShowHalfPoint();
+            if (Input.GetKeyDown(KeyCode.T)) senseiManager.ShowScore(800);
+            if (Input.GetKeyDown(KeyCode.U)) senseiManager.ShowScore(1000);
+            if (Input.GetKeyDown(KeyCode.V)) senseiManager.ShowTime();
+            if (Input.GetKeyDown(KeyCode.W)) senseiManager.ShowDraw();
+            if (Input.GetKeyDown(KeyCode.X)) senseiManager.ShowYouWin();
+            if (Input.GetKeyDown(KeyCode.Y)) senseiManager.ShowYouLose();
+            if (Input.GetKeyDown(KeyCode.Z)) senseiManager.ShowMatchOver();
         }
 
-        // Flip sprite with F key
-        if (Input.GetKeyDown(KeyCode.F) && targetSpriteRenderer != null)
+        // === UTILITY ===
+        // Space: Flip sprite
+        if (Input.GetKeyDown(KeyCode.Space) && targetSpriteRenderer != null)
         {
             targetSpriteRenderer.flipX = !targetSpriteRenderer.flipX;
         }
-
-        if (currentPage == 0)
+        // Backspace: Hide speech bubble
+        if (Input.GetKeyDown(KeyCode.Backspace) && senseiManager != null)
         {
-            // Page 1: Basic + Attacks
-            if (Input.GetKeyDown(KeyCode.Alpha1)) PlayAnimationOnce("Idle");
-            if (Input.GetKeyDown(KeyCode.Alpha2)) PlayAnimationOnce("Walking");
-            if (Input.GetKeyDown(KeyCode.Alpha3)) PlayAnimationOnce("Wait");
-            if (Input.GetKeyDown(KeyCode.Alpha4)) PlayAnimationOnce("Greet");
-            if (Input.GetKeyDown(KeyCode.Alpha5)) PlayAnimationOnce("jump");
-            if (Input.GetKeyDown(KeyCode.Alpha6)) PlayAnimationOnce("MiniJump");
-            if (Input.GetKeyDown(KeyCode.Q)) PlayAnimationOnce("HighPunch");
-            if (Input.GetKeyDown(KeyCode.W)) PlayAnimationOnce("GroinPunch");
-            if (Input.GetKeyDown(KeyCode.E)) PlayAnimationOnce("HighKick");
-            if (Input.GetKeyDown(KeyCode.R)) PlayAnimationOnce("LowKick");
-        }
-        else
-        {
-            // Page 2: More Attacks + Hurt
-            if (Input.GetKeyDown(KeyCode.Alpha1)) PlayAnimationOnce("CrouchKick");
-            if (Input.GetKeyDown(KeyCode.Alpha2)) PlayAnimationOnce("RoundHouse");
-            if (Input.GetKeyDown(KeyCode.Alpha3)) PlayAnimationOnce("FlyingKick");
-            if (Input.GetKeyDown(KeyCode.Alpha4)) PlayAnimationOnce("AnkleKick");
-            if (Input.GetKeyDown(KeyCode.Alpha5)) PlayAnimationOnce("Hurt");
-            if (Input.GetKeyDown(KeyCode.Alpha6)) PlayAnimationOnce("HurtGroin");
+            senseiManager.HideMessage();
         }
     }
 
@@ -131,7 +157,11 @@ public class AnimationTester : MonoBehaviour
 
         Vector3 startPos = targetTransform.position;
         bool needsHorizontalMove = (animName == "jump" || animName == "FlyingKick");
+        bool needsVerticalMove = (animName == "MiniJump");
         float moveDistance = animName == "FlyingKick" ? flyingKickDistance : jumpDistance;
+
+        // Direction based on sprite flip (feet should match face direction)
+        float direction = (targetSpriteRenderer != null && targetSpriteRenderer.flipX) ? -1f : 1f;
 
         if (AudioManager.Instance != null)
             AudioManager.Instance.PlayAttackSound(animName);
@@ -145,10 +175,20 @@ public class AnimationTester : MonoBehaviour
 
         while (stateInfo.normalizedTime < 0.95f && elapsed < timeout)
         {
+            float progress = Mathf.Clamp01(stateInfo.normalizedTime);
+
             if (needsHorizontalMove && targetTransform != null)
             {
-                float progress = Mathf.Clamp01(stateInfo.normalizedTime);
-                targetTransform.position = startPos + new Vector3(moveDistance * progress, 0f, 0f);
+                float height = (animName == "jump") ? jumpHeight : flyingKickHeight;
+                float verticalArc = Mathf.Sin(progress * Mathf.PI) * height;
+                targetTransform.position = startPos + new Vector3(moveDistance * progress * direction, verticalArc, 0f);
+            }
+
+            if (needsVerticalMove && targetTransform != null)
+            {
+                // Arc motion: up then down
+                float verticalProgress = Mathf.Sin(progress * Mathf.PI);
+                targetTransform.position = startPos + new Vector3(0f, miniJumpHeight * verticalProgress, 0f);
             }
 
             yield return null;
@@ -157,7 +197,10 @@ public class AnimationTester : MonoBehaviour
         }
 
         if (needsHorizontalMove && targetTransform != null)
-            targetTransform.position = startPos + new Vector3(moveDistance, 0f, 0f);
+            targetTransform.position = startPos + new Vector3(moveDistance * direction, 0f, 0f);
+
+        if (needsVerticalMove && targetTransform != null)
+            targetTransform.position = startPos;
 
         targetAnimator.speed = 1f;
         targetAnimator.Play("Idle", 0, 0f);

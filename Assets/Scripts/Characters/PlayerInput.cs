@@ -123,7 +123,6 @@ namespace InternationalKarate.Characters
         {
             if (!fighter.isExecutingMove)
             {
-                animator.SetTrigger("attackTrigger");
                 fighter.ExecuteMove(moveType);
             }
         }

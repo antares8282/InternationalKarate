@@ -1923,8 +1923,12 @@ MonoBehaviour:
   targetAnimator: {fileID: 0}
   targetTransform: {fileID: 0}
   targetSpriteRenderer: {fileID: 0}
-  jumpDistance: 1
-  flyingKickDistance: 12
+  senseiManager: {fileID: 0}
+  jumpDistance: 9
+  jumpHeight: 1.5
+  flyingKickDistance: 5
+  flyingKickHeight: 1.5
+  miniJumpHeight: 1.65
 --- !u!4 &1111617467
 Transform:
   m_ObjectHideFlags: 0
