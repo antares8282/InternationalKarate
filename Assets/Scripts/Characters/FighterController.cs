@@ -87,7 +87,7 @@ namespace InternationalKarate.Characters
             float moveDir = isFacingRight ? direction : -direction;
             transform.position += new Vector3(moveDir * moveSpeed * Time.deltaTime, 0, 0);
 
-            animator.SetBool("IsWalking", Mathf.Abs(direction) > 0.1f);
+            animator.SetBool("isWalking", Mathf.Abs(direction) > 0.1f);
         }
 
         /// <summary>

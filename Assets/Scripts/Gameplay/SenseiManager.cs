@@ -16,20 +16,8 @@ namespace InternationalKarate.Gameplay
         public SpriteRenderer senseiSprite;
 
         [Header("Speech Bubble")]
-        [Tooltip("Parent GameObject containing the speech bubble")]
-        public GameObject speechBubbleObject;
-
-        [Tooltip("TextMeshPro component for the speech bubble text")]
-        public TMPro.TextMeshPro speechBubbleText;
-
-        [Header("Display Settings")]
-        [Tooltip("How long to show the speech bubble (seconds)")]
-        public float displayDuration = 2.0f;
-
-        [Tooltip("Fade in/out duration")]
-        public float fadeDuration = 0.3f;
-
-        private Coroutine currentDisplayCoroutine;
+        [Tooltip("SpeechBubbleController component")]
+        public SpeechBubbleController speechBubbleController;
 
         private void Awake()
         {
@@ -45,11 +33,7 @@ namespace InternationalKarate.Gameplay
 
         private void Start()
         {
-            // Hide speech bubble initially
-            if (speechBubbleObject != null)
-            {
-                speechBubbleObject.SetActive(false);
-            }
+            // Speech bubble starts hidden by default in SpeechBubbleController
         }
 
         /// <summary>
@@ -136,27 +120,15 @@ namespace InternationalKarate.Gameplay
         /// <summary>
         /// Show a custom message in the speech bubble
         /// </summary>
-        public void ShowMessage(string message, float duration = -1)
+        public void ShowMessage(string message)
         {
-            if (speechBubbleObject == null || speechBubbleText == null)
+            if (speechBubbleController == null)
             {
-                Debug.LogWarning("Speech bubble components not assigned!");
+                Debug.LogWarning("SpeechBubbleController not assigned!");
                 return;
             }
 
-            // Stop any existing display coroutine
-            if (currentDisplayCoroutine != null)
-            {
-                StopCoroutine(currentDisplayCoroutine);
-            }
-
-            // Use default duration if not specified
-            if (duration < 0)
-            {
-                duration = displayDuration;
-            }
-
-            currentDisplayCoroutine = StartCoroutine(DisplayMessageCoroutine(message, duration));
+            speechBubbleController.ShowMessage(message);
         }
 
         /// <summary>
@@ -164,39 +136,10 @@ namespace InternationalKarate.Gameplay
         /// </summary>
         public void HideMessage()
         {
-            if (currentDisplayCoroutine != null)
+            if (speechBubbleController != null)
             {
-                StopCoroutine(currentDisplayCoroutine);
-                currentDisplayCoroutine = null;
+                speechBubbleController.HideImmediately();
             }
-
-            if (speechBubbleObject != null)
-            {
-                speechBubbleObject.SetActive(false);
-            }
-        }
-
-        private IEnumerator DisplayMessageCoroutine(string message, float duration)
-        {
-            // Set the text
-            speechBubbleText.text = message;
-
-            // Show the bubble
-            speechBubbleObject.SetActive(true);
-
-            // Optional: Fade in (if you want to implement fading)
-            // yield return StartCoroutine(FadeIn());
-
-            // Wait for display duration
-            yield return new WaitForSeconds(duration);
-
-            // Optional: Fade out (if you want to implement fading)
-            // yield return StartCoroutine(FadeOut());
-
-            // Hide the bubble
-            speechBubbleObject.SetActive(false);
-
-            currentDisplayCoroutine = null;
         }
 
         /// <summary>
