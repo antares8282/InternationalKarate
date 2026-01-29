@@ -315,6 +315,7 @@ GameObject:
   - component: {fileID: 255315149}
   - component: {fileID: 255315148}
   - component: {fileID: 255315147}
+  - component: {fileID: 255315152}
   m_Layer: 0
   m_Name: Player2
   m_TagString: Untagged
@@ -334,8 +335,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3070600d54abe4da28c8f47af2f831ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useWASD: 1
-  useArrowKeys: 0
+  isPlayer1: 0
+  comboWindow: 0.2
+  moveSpeed: 5
+  jumpDistance: 9
+  jumpHeight: 1.5
+  flyingKickDistance: 5
+  flyingKickHeight: 4
+  miniJumpHeight: 1.65
 --- !u!114 &255315148
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -418,7 +425,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -254526046, guid: 0b55bc3710a554484887c1ce659bee60, type: 3}
+  m_Sprite: {fileID: 1117353874, guid: 0b55bc3710a554484887c1ce659bee60, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -444,6 +451,26 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &255315152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 255315146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 007645cb5af9f4493ae5fafe1512b63e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerNumber: 1
+  headOffset: {x: 0, y: 1.8}
+  headSize: {x: 0.6, y: 0.5}
+  torsoOffset: {x: 0, y: 1.1}
+  torsoSize: {x: 0.5, y: 0.7}
+  feetOffset: {x: 0, y: 0.3}
+  feetSize: {x: 0.6, y: 0.6}
+  showDebugGizmos: 1
 --- !u!21 &257818438
 Material:
   serializedVersion: 8
@@ -1829,6 +1856,7 @@ GameObject:
   - component: {fileID: 983816130}
   - component: {fileID: 983816133}
   - component: {fileID: 983816134}
+  - component: {fileID: 983816135}
   m_Layer: 0
   m_Name: Player1
   m_TagString: Untagged
@@ -1956,8 +1984,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3070600d54abe4da28c8f47af2f831ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useWASD: 1
-  useArrowKeys: 0
+  isPlayer1: 1
+  comboWindow: 0.2
+  moveSpeed: 5
+  jumpDistance: 9
+  jumpHeight: 1.5
+  flyingKickDistance: 5
+  flyingKickHeight: 4
+  miniJumpHeight: 1.65
+--- !u!114 &983816135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 983816129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 007645cb5af9f4493ae5fafe1512b63e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerNumber: 1
+  headOffset: {x: 0, y: 1.8}
+  headSize: {x: 0.6, y: 0.5}
+  torsoOffset: {x: 0, y: 1.1}
+  torsoSize: {x: 0.5, y: 0.7}
+  feetOffset: {x: 0, y: 0.3}
+  feetSize: {x: 0.6, y: 0.6}
+  showDebugGizmos: 1
 --- !u!1 &1108455513
 GameObject:
   m_ObjectHideFlags: 0
@@ -2049,7 +2103,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1111617466
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2335,11 +2389,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roundDuration: 60
-  pointsToWin: 2
   resetDelay: 2
-  fighter1: {fileID: 0}
-  fighter2: {fileID: 0}
+  greetDuration: 1.5
+  fighter1: {fileID: 983816133}
+  fighter2: {fileID: 255315148}
+  player1Health: {fileID: 1280602982}
+  player2Health: {fileID: 1368390553}
   backgroundManager: {fileID: 745056696}
+  senseiManager: {fileID: 168445927}
   isMatchActive: 0
   isRoundActive: 0
   OnScoreChanged:

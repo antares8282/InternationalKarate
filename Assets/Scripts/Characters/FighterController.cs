@@ -98,7 +98,7 @@ namespace InternationalKarate.Characters
             transform.position = startPosition;
             isExecutingMove = false;
             currentMove = MoveType.None;
-            animator.SetTrigger("Idle");
+            animator.Play("Idle", 0, 0f);
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace InternationalKarate.Characters
         /// </summary>
         public void OnHit(PointValue points)
         {
-            animator.SetTrigger("Hit");
+            animator.Play("Hurt", 0, 0f);
             isExecutingMove = false;
         }
 
